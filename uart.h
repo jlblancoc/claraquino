@@ -29,4 +29,4 @@ namespace UART
 	void Configure(uint32_t baud_rate, char sel_parity = 0, bool rxen = true,bool txen = true,bool twostopbits=false);
 
 	uint8_t AvailableForRead();
-};
+}
