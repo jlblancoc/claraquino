@@ -19,6 +19,6 @@ An open-source hardware board to prototype with Atmel's **AVR8 microcontrollers*
 * System tick clock with 100 μs resolution
 
 # What's included in this repository?
-* Board schematics
-* C library. Tested with GNU GCC within Atmel Studio.
+* [Board schematics](https://github.com/jlblancoc/claraquino/tree/master/board)
+* C library: [sources](https://github.com/jlblancoc/claraquino/tree/master/board), Doxygen HTML reference. Tested with GNU GCC within Atmel Studio.
 * FTDI chip EEPROM XML image, to be grabbed with [FTPROG](http://www.ftdichip.com/Support/Utilities.htm).
