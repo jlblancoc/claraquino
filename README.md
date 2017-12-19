@@ -1,9 +1,9 @@
 # claraquino
-AVR microcontroller prototyping, made better.
+Frustrated with Arduino debugging capabilities? This is your place ;-)
 
 # What's this?
-An open-source hardware board to prototype with Atmel's AVR8 microcontrollers (ATMEGA164 for now),
-including a versatile C library for common peripherals and external sensors:
+An open-source hardware board to prototype with Atmel's **AVR8 microcontrollers** (ATMEGA164 for now),
+**JTAG live-debuggable**, including a **versatile C library** for common peripherals and external sensors:
 * Busy-loop delays
 * External interrupt inputs
 * Internal ADCs
