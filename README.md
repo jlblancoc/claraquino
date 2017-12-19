@@ -1,6 +1,11 @@
 # claraquino
 Frustrated with Arduino debugging capabilities? This is your place ;-)
 
+Copyright (C) 2017 Jose Luis Blanco Claraco, University of Almería
+GNU GPL v3 License
+
+![Claraquino board pic](https://jlblancoc.github.io/claraquino/imgs/claraquino-pic1-thumb.jpg)
+
 # What's this?
 An open-source hardware board to prototype with Atmel's **AVR8 microcontrollers** (ATMEGA164 for now),
 **JTAG live-debuggable**, including a **versatile C library** for common peripherals and external sensors:
