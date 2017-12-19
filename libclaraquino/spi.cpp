@@ -9,7 +9,7 @@
 #include <avr/interrupt.h>
 #include "spi.h"
 #include "gpio.h"
-#include "../config.h"  // F_CPU
+#include "claraquino_config.h"  // F_CPU
 
 // Define hardware SPI pins:
 
@@ -127,32 +127,32 @@ uint16_t spi_transfer16(uint16_t data)
 	union
 	{
 		uint16_t val;
-		struct
+		struct word16_t
 		{
-			uint8_t lsb; 
+			uint8_t lsb;
 			uint8_t msb;
-		};
+		} w16;
 	} in, out;
 	
 	in.val = data;
 	if (!(SPCR0 & _BV(DORD0))) {
-		SPDR0 = in.msb;
+		SPDR0 = in.w16.msb;
 		asm volatile("nop"); // See transfer(uint8_t) function
 		while (!(SPSR0 & _BV(SPIF0))) ;
-		out.msb = SPDR0;
-		SPDR0 = in.lsb;
+		out.w16.msb = SPDR0;
+		SPDR0 = in.w16.lsb;
 		asm volatile("nop");
 		while (!(SPSR0 & _BV(SPIF0))) ;
-		out.lsb = SPDR0;
+		out.w16.lsb = SPDR0;
 		} else {
-		SPDR0 = in.lsb;
+		SPDR0 = in.w16.lsb;
 		asm volatile("nop");
 		while (!(SPSR0 & _BV(SPIF0))) ;
-		out.lsb = SPDR0;
-		SPDR0 = in.msb;
+		out.w16.lsb = SPDR0;
+		SPDR0 = in.w16.msb;
 		asm volatile("nop");
 		while (!(SPSR0 & _BV(SPIF0))) ;
-		out.msb = SPDR0;
+		out.w16.msb = SPDR0;
 	}
 	return out.val;
 }

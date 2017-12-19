@@ -1,0 +1,7 @@
+*.o
+*.d
+*.a
+libclaraquino/.vs/libclaraquino/v14/.atsuo
+libclaraquino/Debug
+libclaraquino/Release
+

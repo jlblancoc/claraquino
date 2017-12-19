@@ -5,7 +5,7 @@
  *  Author: jlblanco
  */ 
 
-#include "../config.h"
+#include "claraquino_config.h"
 #include "leds.h"
 #include "gpio.h"
 #include "delays.h"

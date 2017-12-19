@@ -8,7 +8,7 @@
 #include "millis_timer.h"
 
 #include <avr/interrupt.h>
-#include "../config.h"
+#include "claraquino_config.h"
 
 volatile uint32_t timer_ms=0;
 

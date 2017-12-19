@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../config.h"  // F_CPU
+#include "claraquino_config.h"  // F_CPU
 #include <util/delay.h>
 #include <stdint.h>
 

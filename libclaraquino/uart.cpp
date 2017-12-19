@@ -15,7 +15,7 @@ Universidad de Almeria
 
 #include "uart.h"
 #include "circular_buffer.h"
-#include "../config.h"
+#include "claraquino_config.h"
 
 #include <avr/interrupt.h>
 
