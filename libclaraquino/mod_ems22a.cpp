@@ -35,9 +35,7 @@
 int ENCODER_ABS_CS  = 0x10;
 int ENCODER_ABS_CLK = 0x11;
 int ENCODER_ABS_DO  = 0x12;
-uint32_t  EMS22A_last_millis        = 0;
 uint16_t       EMS22A_sampling_period_ms_tenths = 2000;
-bool           EMS22A_active             = false;
 
 bool init_EMS22A(int8_t init_ENCODER_ABS_CS, int8_t init_ENCODER_ABS_CLK, int8_t init_ENCODER_ABS_DO, uint16_t init_sampling_period_ms_tenths)
 {
