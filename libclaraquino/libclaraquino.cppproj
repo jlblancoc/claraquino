@@ -254,6 +254,12 @@
     <Compile Include="mod_ems22a.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="mod_quad_encoder.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="mod_quad_encoder.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="pwm.cpp">
       <SubType>compile</SubType>
     </Compile>
