@@ -22,8 +22,9 @@ Core features:
 * System tick clock with 100 μs resolution
 
 Supported external sensors:
-* Digital-to-Analog (DAC) converter MAX5500.
-* Absolute encoder EMS22A.
+* Absolute encoder EMS22A
+* Decoder for differential quadrature encoder (Interrupt-driven, up to ~300 K pulses/s)
+* Digital-to-Analog (DAC) converter MAX5500
 
 
 # What's included in this repository?
