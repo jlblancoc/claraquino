@@ -230,10 +230,22 @@
     <Compile Include="gpio.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="i2c.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="i2c.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="leds.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="leds.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LiquidCrystal_I2C.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LiquidCrystal_I2C.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="millis_timer.cpp">
