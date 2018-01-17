@@ -22,6 +22,9 @@
 void i2c_begin();
 
 void i2c_beginTransmission(uint8_t addr);
-void i2c_write(uint16_t data);
-void i2c_endTransmission();
+bool i2c_write(uint16_t data);
+uint8_t i2c_endTransmission(bool sendStop = true);
+void i2c_end();
+void i2c_setClock(uint32_t clock);
+
 

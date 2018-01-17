@@ -20,33 +20,87 @@
 #include "gpio.h"
 #include "claraquino_config.h"  // F_CPU
 
-// Define hardware SPI pins:
+#include "twi.h"
 
-#if defined(__AVR_ATmega164PA__) || defined(__AVR_ATmega164A__) || defined(__AVR_ATmega164P__)
-// atmega{16,32,64,128}4:
-//#define PIN_SPI_SS    0x24 // PB4
 
-#else
-#error "Unsupported device!"
-#endif
+#define BUFFER_LENGTH 32
+//static uint8_t rxBuffer[BUFFER_LENGTH];
+static uint8_t rxBufferIndex = 0;
+static uint8_t rxBufferLength = 0;
+
+static uint8_t txAddress = 0;
+static uint8_t txBuffer[BUFFER_LENGTH];
+static uint8_t txBufferIndex = 0;
+static uint8_t txBufferLength = 0;
+bool transmitting = 0;
+
 
 void i2c_begin()
 {
+	rxBufferIndex = 0;
+	rxBufferLength = 0;
+
+	txBufferIndex = 0;
+	txBufferLength = 0;
+
+	twi_init();
+}
+
+void i2c_end()
+{
+	twi_disable();
+}
+
+void i2c_setClock(uint32_t clock)
+{
+	twi_setFrequency(clock);
 }
 
 void i2c_beginTransmission(uint8_t addr)
 {
-
-
+  // indicate that we are transmitting
+  transmitting = 1;
+  // set address of targeted slave
+  txAddress = addr;
+  // reset tx buffer iterator vars
+  txBufferIndex = 0;
+  txBufferLength = 0;
 }
 
-void i2c_write(uint16_t data)
+bool i2c_write(uint16_t data)
 {
-
+	if(transmitting)
+	{
+		// in master transmitter mode
+		// don't bother if buffer is full
+		if(txBufferLength >= BUFFER_LENGTH)
+		{
+			//setWriteError();
+			return false;
+		}
+		// put byte in tx buffer
+		txBuffer[txBufferIndex] = data;
+		++txBufferIndex;
+		// update amount in buffer
+		txBufferLength = txBufferIndex;
+	}
+	else
+	{
+		// in slave send mode
+		// reply to master
+		twi_transmit((const uint8_t*)&data, 1);
+	}
+	return true;
 }
 
-void i2c_endTransmission()
+uint8_t i2c_endTransmission(bool sendStop)
 {
-
-
+	// transmit buffer (blocking)
+	uint8_t ret = twi_writeTo(txAddress, txBuffer, txBufferLength, 1, sendStop);
+	// reset tx buffer iterator vars
+	txBufferIndex = 0;
+	txBufferLength = 0;
+	// indicate that we are done transmitting
+	transmitting = 0;
+	return ret;
 }
