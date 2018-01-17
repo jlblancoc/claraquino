@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <avr/io.h>
 #include <stdint.h>
 
 /** Initialize the SPI bus of the uC */
@@ -42,3 +43,19 @@ void spi_begin_transaction();
 void spi_end_transaction();
 
 uint16_t spi_transfer16(uint16_t data);
+
+// Write to the SPI bus (MOSI pin) and also receive (MISO pin)
+inline static uint8_t spi_transfer(uint8_t data) 
+{
+	SPDR0 = data;
+	/*
+	* The following NOP introduces a small delay that can prevent the wait
+	* loop form iterating when running at the maximum speed. This gives
+	* about 10% more speed, even if it seems counter-intuitive. At lower
+	* speeds it is unnoticed.
+	*/
+	asm volatile("nop");
+	while (!(SPSR0 & _BV(SPIF0))) ; // wait
+	return SPDR0;
+}
+

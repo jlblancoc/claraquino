@@ -254,6 +254,18 @@
     <Compile Include="millis_timer.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\imu_lsm9ds1\LSM9DS1_Registers.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\imu_lsm9ds1\LSM9DS1_Types.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\imu_lsm9ds1\SparkFunLSM9DS1.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\imu_lsm9ds1\SparkFunLSM9DS1.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="mod_ems22a.h">
       <SubType>compile</SubType>
     </Compile>
@@ -290,6 +302,10 @@
     <Compile Include="uart.h">
       <SubType>compile</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="modules" />
+    <Folder Include="modules\imu_lsm9ds1" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
