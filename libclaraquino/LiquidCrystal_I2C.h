@@ -144,10 +144,12 @@ public:
 	inline void cursor_on() { cursor(); }
 	inline void cursor_off() { noCursor(); }
 
+	size_t write(const char *str);
+	size_t write(const uint8_t *buffer, size_t size);
+
 // Compatibility API function aliases
 	void setBacklight(uint8_t new_val);				// alias for backlight() and nobacklight()
 	void load_custom_character(uint8_t char_num, uint8_t *rows);	// alias for createChar()
-	//void printstr(const char[]);
 
 private:
 	void send(uint8_t, uint8_t);

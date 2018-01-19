@@ -1,6 +1,7 @@
 
 #include "LiquidCrystal_I2C.h"
 #include <inttypes.h>
+#include <string.h>
 #include "delays.h"
 
 // When the display powers up, it is configured as follows:
@@ -200,11 +201,11 @@ bool LiquidCrystal_I2C::getBacklight() {
 
 /*********** mid level commands, for sending data/cmds */
 
-inline void LiquidCrystal_I2C::command(uint8_t value) {
+void LiquidCrystal_I2C::command(uint8_t value) {
 	send(value, 0);
 }
 
-inline size_t LiquidCrystal_I2C::write(uint8_t value) {
+size_t LiquidCrystal_I2C::write(uint8_t value) {
 	send(value, Rs);
 	return 1;
 }
@@ -251,9 +252,18 @@ void LiquidCrystal_I2C::setBacklight(uint8_t new_val){
 	}
 }
 
-/*void LiquidCrystal_I2C::printstr(const char c[]){
-	//This function is not identical to the function used for "real" I2C displays
-	//it's here so the user sketch doesn't have to be changed
-	print(c);
-}*/
+size_t LiquidCrystal_I2C::write(const char *str)
+{
+	if (str == NULL) return 0;
+	return write((const uint8_t *)str, strlen(str));
+}
 
+size_t LiquidCrystal_I2C::write(const uint8_t *buffer, size_t size)
+{
+	size_t n = 0;
+	while (size--) {
+		if (write(*buffer++)) n++;
+		else break;
+	}
+	return n;
+}
