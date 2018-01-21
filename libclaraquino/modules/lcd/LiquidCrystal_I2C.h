@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <inttypes.h>
-#include "i2c.h"
+#include <libclaraquino/i2c.h>
 
 // commands
 #define LCD_CLEARDISPLAY 0x01

@@ -21,10 +21,12 @@ Core features:
 * SPI bus
 * System tick clock with 100 μs resolution
 
-Supported external sensors:
+Additional modules:
 * Absolute encoder EMS22A
 * Decoder for differential quadrature encoder (Interrupt-driven, up to ~300 K pulses/s)
 * Digital-to-Analog (DAC) converter MAX5500
+* `imu_lsm9ds1`: SparkFun LSM9DS1 9DOF IMU. Forked and adapted from [here](https://github.com/sparkfun/LSM9DS1_Breakout).
+* `lcd`: Support for LCD displays via a I2C port expander. Forked and adapted from [here](https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library).
 
 
 # What's included in this repository?
