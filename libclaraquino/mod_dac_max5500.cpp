@@ -19,8 +19,7 @@
 #include "delays.h"
 #include "mod_dac_max5500.h"
 
-#warning: Make this configurable
-int PIN_DAC_MAX5500_CS = 0x24;
+uint8_t PIN_DAC_MAX5500_CS = 0;
 
 /* SPI frames for the MAX5500 chip
            16 bits
@@ -37,8 +36,10 @@ Commands C1.C0:
 
 */
 
-void mod_dac_max5500_init()
+void mod_dac_max5500_init(uint8_t pin_no)
 {
+	PIN_DAC_MAX5500_CS = pin_no;
+	
 	// start the SPI library:
 	spi_begin();
 	spi_settings(8000000, SPI_MSB_FIRST, SPI_MODE0);

@@ -20,8 +20,9 @@
 
 #include <stdint.h>  // uint8_t, etc.
 
-void mod_dac_max5500_init();     //!< time: 40 us
+/** Initializes MAX5500 interface. Specify pin number for CS 
+ * (for Claraquino pin numering format, see gpio).
+ * Execution time: 40 us */
+void mod_dac_max5500_init(uint8_t PIN_DAC_MAX5500_CS);
 void mod_dac_max5500_send_spi_word(uint16_t tx_word);
 void mod_dac_max5500_update_single_DAC(uint8_t dac_idx, uint16_t dac_value); //!< time: 11.15 us
-
-extern int PIN_DAC_MAX5500_CS;
