@@ -24,7 +24,7 @@
 
 
 #define BUFFER_LENGTH 32
-//static uint8_t rxBuffer[BUFFER_LENGTH];
+static uint8_t rxBuffer[BUFFER_LENGTH];
 static uint8_t rxBufferIndex = 0;
 static uint8_t rxBufferLength = 0;
 
@@ -67,7 +67,7 @@ void i2c_beginTransmission(uint8_t addr)
   txBufferLength = 0;
 }
 
-bool i2c_write(uint16_t data)
+bool i2c_write(uint8_t data)
 {
 	if(transmitting)
 	{
@@ -104,3 +104,65 @@ uint8_t i2c_endTransmission(bool sendStop)
 	transmitting = 0;
 	return ret;
 }
+
+uint8_t i2c_requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddress, uint8_t isize, bool sendStop)
+{
+	if (isize > 0)
+	{
+		// send internal address; this mode allows sending a repeated start to access
+		// some devices' internal registers. This function is executed by the hardware
+		// TWI module on other processors (for example Due's TWI_IADR and TWI_MMR registers)
+
+		i2c_beginTransmission(address);
+
+		// the maximum size of internal address is 3 bytes
+		if (isize > 3){
+			isize = 3;
+		}
+
+		// write internal register address - most significant byte first
+		while (isize-- > 0)
+		i2c_write((uint8_t)(iaddress >> (isize*8)));
+		i2c_endTransmission(false);
+	}
+
+	// clamp to buffer length
+	if(quantity > BUFFER_LENGTH){
+		quantity = BUFFER_LENGTH;
+	}
+	// perform blocking read into buffer
+	uint8_t read = twi_readFrom(address, rxBuffer, quantity, sendStop);
+	// set rx buffer iterator vars
+	rxBufferIndex = 0;
+	rxBufferLength = read;
+
+	return read;
+}
+
+
+// must be called in:
+// slave rx event callback
+// or after requestFrom(address, numBytes)
+uint8_t i2c_read()
+{
+	uint8_t value = 0xff;	
+	// get each successive byte on each call
+	if(rxBufferIndex < rxBufferLength){
+		value = rxBuffer[rxBufferIndex];
+		++rxBufferIndex;
+	}
+	return value;
+}
+
+// must be called in:
+// slave rx event callback
+// or after requestFrom(address, numBytes)
+uint8_t i2c_peek()
+{
+	uint8_t value = 0xff;
+	if(rxBufferIndex < rxBufferLength){
+		value = rxBuffer[rxBufferIndex];
+	}
+	return value;
+}
+

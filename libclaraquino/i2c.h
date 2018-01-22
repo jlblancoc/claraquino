@@ -22,9 +22,25 @@
 void i2c_begin();
 
 void i2c_beginTransmission(uint8_t addr);
-bool i2c_write(uint16_t data);
+bool i2c_write(uint8_t data);
 uint8_t i2c_endTransmission(bool sendStop = true);
 void i2c_end();
 void i2c_setClock(uint32_t clock);
+
+/** i2c_requestFrom() blocks until data arrives. */
+uint8_t i2c_requestFrom(uint8_t address, uint8_t quantity, uint32_t iaddress, uint8_t isize, bool sendStop);
+inline uint8_t i2c_requestFrom(uint8_t address, uint8_t quantity, bool sendStop) {
+	return i2c_requestFrom(address, quantity, (uint32_t)0, (uint8_t)0, sendStop);
+}
+inline uint8_t i2c_requestFrom(uint8_t address, uint8_t quantity) {
+	return i2c_requestFrom(address, quantity, true); 
+}
+
+/** Must be called after i2c_requestFrom() */
+uint8_t i2c_read();
+/** Must be called after i2c_requestFrom() */
+uint8_t i2c_peek();
+
+
 
 
