@@ -22,12 +22,7 @@ Distributed as-is; no warranty is given.
 #ifndef __SparkFunLSM9DS1_H__
 #define __SparkFunLSM9DS1_H__
 
-#if defined(ARDUINO) && ARDUINO >= 100
-  #include "Arduino.h"
-#else
-  #include "WProgram.h"
-  #include "pins_arduino.h"
-#endif
+//#include "WProgram.h"
 
 #include "LSM9DS1_Registers.h"
 #include "LSM9DS1_Types.h"
