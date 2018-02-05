@@ -33,7 +33,7 @@ void mod_ad7606_init(const ad7606_config_t &cfg)
 	// DATA BUS:
 	for (uint8_t i=0;i<8;i++)
 		gpio_pin_mode(cfg.PIN_DATA[i], INPUT);
-	
+
 	// Send reset pulse: (min 50ns)
 	gpio_pin_write(cfg.PIN_RESET, true);
 	gpio_pin_mode(cfg.PIN_RESET, OUTPUT);
@@ -78,12 +78,14 @@ void mod_ad7606_read_all(int16_t *buf)
 
 	// Store int16_t as little endian.
 	// high-byte sent first.
-	for (uint8_t i=0;i<8;i++)
+	for (int8_t i=0;i<8;i++)
 	{
+		bool read_1st;
 		// /RD low pulse: should be ~25ns (+ delay in propagation until PIO_PDSR)
 		gpio_pin_write(adc_cfg.PIN_nRD, false); // nRD=0
 		asm ("nop");asm ("nop");
 		const uint8_t bh = ad7606_read_byte();
+		read_1st = gpio_pin_read(adc_cfg.PIN_1stDATA);
 		gpio_pin_write(adc_cfg.PIN_nRD, true); // nRD=1
 		asm ("nop");asm ("nop");
 
@@ -92,7 +94,12 @@ void mod_ad7606_read_all(int16_t *buf)
 		const uint8_t bl = ad7606_read_byte();
 		gpio_pin_write(adc_cfg.PIN_nRD, true); // nRD=1
 
+		// If we missed a channel, iterate until we re-synchronize again:
+		if (i==0 && !read_1st)
+		{
+			i--;
+			continue;
+		}
 		*buf++ = (((uint16_t)bl) << 8) | bh;
 	}
 }
-
