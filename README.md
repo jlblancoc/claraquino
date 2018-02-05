@@ -27,7 +27,7 @@ Additional modules:
 * Digital-to-Analog (DAC) converter MAX5500
 * `imu_lsm9ds1`: SparkFun LSM9DS1 9DOF IMU. Forked and adapted from [here](https://github.com/sparkfun/LSM9DS1_Breakout).
 * `lcd`: Support for LCD displays via a I2C port expander. Forked and adapted from [here](https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library).
-
+* `ad7606`: Support for the Analog-to-Digital (ADC) chip AD7606.
 
 # What's included in this repository?
 * [Board schematics](https://github.com/jlblancoc/claraquino/tree/master/board)
