@@ -35,12 +35,12 @@ void mod_ad7606_init(const ad7606_config_t &cfg)
 		gpio_pin_mode(cfg.PIN_DATA[i], INPUT);
 
 	// Send reset pulse: (min 50ns)
-	gpio_pin_write(cfg.PIN_RESET, true);
+	gpio_pin_write(cfg.PIN_RESET, false);
 	gpio_pin_mode(cfg.PIN_RESET, OUTPUT);
 
-	gpio_pin_write(cfg.PIN_RESET, false);
-	delay_us(100);
 	gpio_pin_write(cfg.PIN_RESET, true);
+	delay_us(100);
+	gpio_pin_write(cfg.PIN_RESET, false);
 }
 
 void mod_ad7606_convst()
@@ -66,8 +66,8 @@ bool mod_ad7606_check_busy()
 static uint8_t ad7606_read_byte()
 {
 	uint8_t b = 0;
-	for (uint8_t b=0;b<8;b++)
-		b = b | ((gpio_pin_read(adc_cfg.PIN_DATA[b]) ? 1:0) << b);
+	for (uint8_t k=0;k<8;k++)
+		b = b | ((gpio_pin_read(adc_cfg.PIN_DATA[k]) ? 1:0) << k);
 	return b;
 }
 
@@ -100,6 +100,6 @@ void mod_ad7606_read_all(int16_t *buf)
 			i--;
 			continue;
 		}
-		*buf++ = (((uint16_t)bl) << 8) | bh;
+		*buf++ = (((uint16_t)bh) << 8) | bl;
 	}
 }
